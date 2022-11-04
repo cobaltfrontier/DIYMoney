@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %} Contact {% endblock %}
+{% block body %}
+            <!-- Header-->
+            <header class="bg-dark py-5">
+                <div class="container px-5">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-8 col-xl-7 col-xxl-6">
+                            <div class="my-5 text-center text-xl-start">
+                                {% if current_user.is_anonymous %}
+                                <h1 class="display-5 fw-bolder text-white mb-2">Welcome to DIY Money</style></h1>
+                                {% else %}
+                                <h1 class="display-5 fw-bolder text-white mb-2">Welcome back to DIY Money, {{ first_name }} </style></h1>
+                                {% endif %}
+                                <p class="lead fw-normal text-white-50 mb-4">This fresh new app is here to help you track your net worth and manage your portfolio of assets.</p>
+                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                                    <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Click to Scroll Down</a>
+                                    {% if current_user.is_anonymous %}
+                                    <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('login') }}">Login</a>
+                                    {% else %}
+                                    <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('logout') }}">Logout</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-xxl-5 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="{{ url_for('static', filename='img/asset-management-eam.jpeg') }}" alt="..." /></div>
+                    </div>
+                </div>
+            </header>
+            <!-- Features section-->
+            <section class="py-5" id="features">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5">
+                        <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">A better way to start building.</h2></div>
+                        <div class="col-lg-8">
+                            <div class="row gx-5 row-cols-1 row-cols-md-2">
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-bar-chart-line"></i></div>
+                                    <h2 class="h5">Net Worth Tracking</h2>
+                                    <p class="mb-0">It is essential you track your net worth on a schedule. Use this app to help track your net worth over time.</p>
+                                </div>
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-calculator"></i></i></div>
+                                    <h2 class="h5">Cash Flow Management</h2>
+                                    <p class="mb-0">Otherwise known as budgeting, this essential skill is the most important on your road to financial freedom.</p>
+                                </div>
+                                <div class="col h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-pie-chart"></i></div>
+                                    <h2 class="h5">Asset Allocation</h2>
+                                    <p class="mb-0">Understanding your current asset allocation and what to do when the percentages get off is super important. This new app can help track your portfolio.</p>
+                                </div>
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-percent"></i></div>
+                                    <h2 class="h5">Savings Rate</h2>
+                                    <p class="mb-0">When you know your savings rate and income, you can get a pretty good idea of when you will reach financial independence.</p>
+                                </div>
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-code"></i></div>
+                                    <h2 class="h5">Dividend Yield</h2>
+                                    <p class="mb-0">A dividend yield, otherwise known as a "Yield Shield" shows a yearly dividend amount. Most companies do not reduce their dividend rate, thereby you can realistically count on your dividend year after year.</p>
+                                </div>
+                                <div class="col mb-5 mb-md-0 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-patch-check"></i></div>
+                                    <h2 class="h5">Yearly Contributions</h2>
+                                    <p class="mb-0">Keep track of your yearly contributions to your retirement accounts.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+
+{% endblock %}

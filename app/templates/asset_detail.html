@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+</head>
+<body>
+	<div>
+      <canvas id="asset_class" width="200" height="50"></canvas>
+    </div>
+</body>
+
+<script type="text/javascript">
+			let acct_type_label = JSON.parse("[\n    \"INT: DEVELOPED\",\n    \"INT: EMERGING\",\n    \"US TOTAL STOCK\",\n    \"US SMALL CAP\",\n    \"US VALUE\",\n    \"REIT\",\n    \"LONG TERM BONDS\",\n    \"TIPS\",\n    \"CASH\",\n    \"CRYPTO\"\n]")
+            let acct_type_value = JSON.parse("[\"15.00\", \"10.00\", \"10.00\", \"10.00\", \"10.00\", \"14.80\", \"14.50\", \"12.70\", \"1.50\", \"1.50\"]")
+
+            let account_type_chart = new Chart(asset_class , {
+
+                type: 'pie',
+                data: {
+                    labels: acct_type_label,
+                    datasets: [{
+                            label: "Asset Class",
+                            data: acct_type_value,
+                            backgroundColor: ['#5DA5DA ', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267','#5DA5DA ', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267'],
+
+                            borderWidth: 1,
+                            hoverBorderColor: "black",
+                            hoverBorderWidth: 2,
+                            hoverBackgroundColor: 'rgba(154, 245, 140)',
+                            pointHoverRadius: 5
+                        }],
+                    },
+                    options: {
+                            title: {
+                                display: true,
+                                    text: "Asset Class",
+                                        fontSize: 20,
+                            },
+                            legend: {
+                                position: "right",
+                                    labels: {
+                                    fontColor: "gray"
+                                },
+                                display: true,
+                            },
+
+                            elements: {
+                                hitRadius: 3,
+                            }
+                    }
+                })
+</script>
+
+</html>

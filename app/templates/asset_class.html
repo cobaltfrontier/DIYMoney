@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block body %}
+<br>
+
+<div class="container px-lg-5">
+    <div class="p-4 p-lg-1 bg-light rounded-3 text-center">
+        <div class="m-4 m-lg-5">
+            <h1 class="display-5 fw-bold">Asset Classes</h1>
+        </div>
+    </div>
+</div>
+<canvas id="asset_class"></canvas>
+<button type="button" class="btn btn-success btn-lg btn-block" data-bs-toggle="modal" data-bs-target="#add_asset_class">Add Asset Class</button>
+
+<br>
+
+<div class="modal fade" id="add_asset_class" aria-labelledby="add_account_typeLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="add_modalLabel">Add Transaction Type</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form action="{{ url_for('asset_class') }}" method="POST" novalidate>
+<div class="modal-body">
+{{ form.hidden_tag() }}
+<p>
+{{ form.asset_class_name.label }}<br>
+{{ form.asset_class_name(size=32) }}
+{% for error in form.asset_class_name.errors %}
+<span style="color: red;">[{{ error }}] </span>
+{% endfor %}
+</p>
+<p>
+{{ form.allocation_percent.label }}<br>
+{{ form.allocation_percent(size=52) }}
+{% for error in form.allocation_percent.errors %}
+<span style="color: red;">[{{ error }}] </span>
+{% endfor %}
+</p>
+<p> {{ form.submit(class="btn btn-success") }} </p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<table  class="table">
+<thead>
+<th scope="col">Asset Class Name</th>
+<th scope="col">Allocation Percent</th>
+</thead>
+{% for asset_class in asset_classes %}
+<tr>
+<td align="left">{{ asset_class.asset_class_name }}</td>
+<td align="left">{{ asset_class.allocation_percent | percentageFormat }}</td>
+
+    <td>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update_modal{{asset_class.asset_class_id}}">Update Info</button>
+    <div class="modal fade" id="update_modal{{asset_class.asset_class_id}}" aria-labelledby="update_modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="update_modalLabel">Update Practice Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                     <form action="{{url_for('asset_class_update', asset_class_id=asset_class.asset_class_id)}}" method="POST" novalidate>
+                        <div class="modal-body">
+                            <p>
+                                <label for="asset_class_name">Asset Class Name: </label><br>
+                                <input type="text" id="asset_class_name" name="asset_class_name" value="{{ asset_class.asset_class_name}}">
+                            </p>
+                            <p>
+                                <label for="allocation_percent">Allocation Percent: </label><br>
+                                <input type="text" id="allocation_percent" name="allocation_percent" value="{{ asset_class.allocation_percent }}">
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-success" value="Submit">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> </div> </form>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_modal{{asset_class.asset_class_id}}">Delete</button>
+
+                        <div class="modal fade" id="delete_modal{{asset_class.asset_class_id}}" aria-labelledby="delete_modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delete_modalLabel">Delete Asset</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                       <div class="modal-body">
+                            <p>Are you sure you want to delete {{asset_class.asset_class_name }}? This can not been undone.</p>
+                       </div>
+
+
+
+                    <script>
+
+                            port_label = JSON.parse({{ label | tojson }})
+                            port_data = JSON.parse({{ data | tojson }})
+
+                            let account_type_chart = new Chart(asset_class , {
+                                type: 'pie',
+                                data: {
+                                    labels: port_label,
+                                    datasets: [{
+                                        label: "Asset Class",
+                                        data: port_data,
+                                        backgroundColor: ['#5DA5DA ', '#FAA43A', '#60BD68'],
+
+                                        borderWidth: 1,
+                                        hoverBorderColor: "black",
+                                        hoverBorderWidth: 2,
+                                        hoverBackgroundColor: 'rgba(154, 245, 140)',
+                                        pointHoverRadius: 5
+                                    }],
+                                },
+                                options: {
+                                        title: {
+                                            display: true,
+                                                text: "Asset Class",
+                                                    fontSize: 20,
+                                        },
+                                        legend: {
+                                            position: "right",
+                                                labels: {
+                                                fontColor: "gray"
+                                            },
+                                            display: true,
+                                        },
+
+                                        elements: {
+                                            hitRadius: 2,
+                                        }
+                            }
+                        })
+
+                </script>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{url_for('asset_class_delete', asset_class_id=asset_class.asset_class_id)}}" method="POST" novalidate>
+                        <input type="submit" class="btn btn-primary" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</td>
+
+</tr>
+{% endfor %}
+</table>
+<br>
+<!-- Footer-->
+        <footer class="bg-dark py-4 mt-auto">
+            <div class="col-auto"><p class="small m-0 text-center text-white">Copyright &copy; DIY Money 2022</p></div>
+        </footer>
+{% endblock %}
+

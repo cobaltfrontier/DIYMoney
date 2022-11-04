@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %} Page 2 {% endblock %}
+
+{% block nav_active_page2 %}active" aria-current="page{% endblock %}
+
+{% block body %}
+  <div class="card" style="width: 18rem;">
+    <img src="{{ url_for('static', filename='img/smileyface.png') }}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Page 2</h5>
+      <p class="card-text">This is page 2. My hobby is {{ hobby }}.</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+{% endblock %}
